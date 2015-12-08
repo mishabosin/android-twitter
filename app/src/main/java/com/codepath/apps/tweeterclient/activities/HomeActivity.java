@@ -10,6 +10,7 @@ import com.codepath.apps.tweeterclient.R;
 import com.codepath.apps.tweeterclient.RestApplication;
 import com.codepath.apps.tweeterclient.TwitterClient;
 import com.codepath.apps.tweeterclient.adapters.TweetFeedAdapter;
+import com.codepath.apps.tweeterclient.listeners.RecyclerViewScrollListener;
 import com.codepath.apps.tweeterclient.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -44,26 +45,41 @@ public class HomeActivity extends AppCompatActivity {
     private void initRecyclerView() {
         RecyclerView rvComments = (RecyclerView) findViewById(R.id.rvTweets);
         rvComments.setAdapter(adapter);
-        rvComments.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvComments.setLayoutManager(linearLayoutManager);
+        rvComments.addOnScrollListener(new RecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                fetchHomeTimeline(page);
+            }
+        });
     }
 
     private void fetchHomeTimeline() {
         fetchHomeTimeline(1);
     }
 
-    private void updateTweets(ArrayList<Tweet> newTweets) {
-        tweets.clear();
+    private void updateTweets(ArrayList<Tweet> newTweets, int page) {
+        if (page == 0) {
+            tweets.clear();
+        }
         tweets.addAll(newTweets);
-        adapter.notifyDataSetChanged();
+
+        if (page == 0) {
+            adapter.notifyDataSetChanged();
+            return;
+        }
+        int curSize = adapter.getItemCount();
+        adapter.notifyItemRangeInserted(curSize, tweets.size() - 1);
     }
 
-    private void fetchHomeTimeline(int page) {
+    private void fetchHomeTimeline(final int page) {
         TwitterClient client = RestApplication.getRestClient();
         client.getHomeTimeline(page, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
                 ArrayList<Tweet> tweets = Tweet.fromJson(json);
-                updateTweets(tweets);
+                updateTweets(tweets, page);
             }
 
             @Override
