@@ -8,9 +8,9 @@ Submitted by: **Misha Bosin**
 
 ### User stories
 
-* [ ] User can sign in to Twitter using OAuth login
-* [ ] User can view the tweets from their home timeline
-    * [ ] User should be displayed the username, name, and body for each tweet
+* [x] User can sign in to Twitter using OAuth login
+* [x] User can view the tweets from their home timeline
+    * [x] User should be displayed the username, name, and body for each tweet
     * [ ] User should be displayed the relative timestamp for each tweet "8m", "7h"
     * [ ] User can view more tweets as they scroll with infinite pagination
 * [ ] User can compose a new tweet

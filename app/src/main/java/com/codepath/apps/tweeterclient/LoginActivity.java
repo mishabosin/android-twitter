@@ -48,4 +48,12 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 		getClient().connect();
 	}
 
+    /**
+     * Logout from the twitter api
+     */
+    public void logout() {
+        TwitterClient client = RestApplication.getRestClient();
+        client.clearAccessToken();
+    }
+
 }
