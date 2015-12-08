@@ -1,12 +1,12 @@
-package com.codepath.apps.restclienttemplate.activities;
+package com.codepath.apps.tweeterclient.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.RestApplication;
-import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.tweeterclient.R;
+import com.codepath.apps.tweeterclient.RestApplication;
+import com.codepath.apps.tweeterclient.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;

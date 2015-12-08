@@ -1,8 +1,8 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.tweeterclient;
 
 import android.content.Context;
 
-import com.codepath.apps.restclienttemplate.utils.Constants;
+import com.codepath.apps.tweeterclient.utils.Constants;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;

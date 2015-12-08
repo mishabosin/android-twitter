@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.tweeterclient;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.codepath.apps.restclienttemplate.activities.HomeActivity;
+import com.codepath.apps.tweeterclient.activities.HomeActivity;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.codepath.apps.restclienttemplate"
+    package="com.codepath.apps.tweeterclient"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".RestApplication"
+        android:name="com.codepath.apps.tweeterclient.RestApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +30,7 @@
             android:value="1" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name="com.codepath.apps.tweeterclient.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" >
             <intent-filter>
@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.HomeActivity" >
+        <activity android:name="com.codepath.apps.tweeterclient.activities.HomeActivity" >
         </activity>
     </application>
 
