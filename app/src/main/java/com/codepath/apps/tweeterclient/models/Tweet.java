@@ -1,5 +1,7 @@
 package com.codepath.apps.tweeterclient.models;
 
+import android.text.format.DateUtils;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -9,7 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Represents the Tweet object returned from the Twitter API
@@ -22,6 +28,8 @@ public class Tweet extends Model {
     private String text;
     @Column(name = "twitter_id", index = true)
     private String twitterId;
+    @Column(name = "created_at", index = true)
+    private String createdAt;
 
     public Tweet() {
         super();
@@ -37,6 +45,7 @@ public class Tweet extends Model {
         try {
             this.twitterId = object.getString("id_str");
             this.text = object.getString("text");
+            this.createdAt = object.getString("created_at");
             this.user = new TwitterUser(object.getJSONObject("user"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -49,10 +58,10 @@ public class Tweet extends Model {
      * @return array of Tweets
      */
     public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
-        ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
+        ArrayList<Tweet> tweets = new ArrayList<>(jsonArray.length());
 
         for (int i=0; i < jsonArray.length(); i++) {
-            JSONObject tweetJson = null;
+            JSONObject tweetJson;
             try {
                 tweetJson = jsonArray.getJSONObject(i);
             } catch (Exception e) {
@@ -79,6 +88,24 @@ public class Tweet extends Model {
 
     public String getTwitterId() {
         return twitterId;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getRelativeCreatedAt() {
+        final String TWITTER="EEE MMM dd HH:mm:ss ZZZZZ yyyy";
+        SimpleDateFormat sf = new SimpleDateFormat(TWITTER, Locale.ENGLISH);
+        Date date;
+        try {
+            date = sf.parse(createdAt);
+        } catch (ParseException e) {
+            return "Unknown";
+        }
+
+        CharSequence relative = DateUtils.getRelativeTimeSpanString(date.getTime());
+        return relative.toString();
     }
 
     // Finders

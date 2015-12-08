@@ -26,12 +26,14 @@ public class TweetFeedAdapter extends
     public static class TweetViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivAvatar;
         public TextView tvUserScreenName;
+        public TextView tvTimestamp;
         public TextView tvText;
 
         public TweetViewHolder(View itemView) {
             super(itemView);
             ivAvatar = (ImageView) itemView.findViewById(R.id.ivAvatar);
             tvUserScreenName = (TextView) itemView.findViewById(R.id.tvUserScreenName);
+            tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
             tvText = (TextView) itemView.findViewById(R.id.tvText);
         }
     }
@@ -51,6 +53,7 @@ public class TweetFeedAdapter extends
 
         holder.tvText.setText(tweet.getText());
         holder.tvUserScreenName.setText(String.format("@%s", user.getScreenName()));
+        holder.tvTimestamp.setText(tweet.getRelativeCreatedAt());
 
         renderAvatar(holder, user.getProfileImageUrl());
     }
