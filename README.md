@@ -24,7 +24,7 @@ Submitted by: **Misha Bosin**
 
 ## Video Walkthrough 
 
-    ![Imgur](http://i.example.com/Jc71zuY.gif)
+    ![Imgur](http://i.imgur.com/n8gxDGr.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
