@@ -5,7 +5,9 @@ import android.text.format.DateUtils;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.codepath.apps.tweeterclient.utils.Storage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -26,7 +29,7 @@ public class Tweet extends Model {
     private TwitterUser user;
     @Column(name = "text")
     private String text;
-    @Column(name = "twitter_id", index = true)
+    @Column(name = "twitter_id", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String twitterId;
     @Column(name = "created_at", index = true)
     private String createdAt;
@@ -60,6 +63,9 @@ public class Tweet extends Model {
     public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
         ArrayList<Tweet> tweets = new ArrayList<>(jsonArray.length());
 
+        // Throw away all previous tweets and users
+        Storage.deleteAll();
+
         for (int i=0; i < jsonArray.length(); i++) {
             JSONObject tweetJson;
             try {
@@ -70,6 +76,7 @@ public class Tweet extends Model {
             }
 
             Tweet tweet = new Tweet(tweetJson);
+            tweet.user.save();
             tweet.save();
             tweets.add(tweet);
         }
@@ -108,8 +115,14 @@ public class Tweet extends Model {
         return relative.toString();
     }
 
-    // Finders
-    public static TwitterUser byTwitterId(String twitterId) {
-        return new Select().from(TwitterUser.class).where("twitter_id = ?", twitterId).executeSingle();
+    public static List<Tweet> getAll() {
+        return new Select()
+                .from(Tweet.class)
+                .execute();
     }
+
+    public static void deleteAll() {
+        new Delete().from(Tweet.class).execute();
+    }
+
 }

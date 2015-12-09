@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
     }
 
     private void initAdapter() {
-        tweets = new ArrayList<>();
+        tweets = Tweet.getAll();
         adapter = new TweetFeedAdapter(tweets);
     }
 

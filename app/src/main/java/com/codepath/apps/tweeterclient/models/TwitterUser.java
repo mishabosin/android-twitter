@@ -3,6 +3,7 @@ package com.codepath.apps.tweeterclient.models;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import org.json.JSONException;
@@ -14,7 +15,7 @@ import org.json.JSONObject;
 @Table(name="users")
 public class TwitterUser extends Model {
     // Fields
-    @Column(name = "twitter_id", index = true)
+    @Column(name = "twitter_id", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String twitterId;
     @Column(name = "screen_name")
     private String screenName;
@@ -59,4 +60,7 @@ public class TwitterUser extends Model {
         return new Select().from(TwitterUser.class).where("twitter_id = ?", twitterId).executeSingle();
     }
 
+    public static void deleteAll() {
+        new Delete().from(TwitterUser.class).execute();
+    }
 }
