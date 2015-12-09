@@ -7,6 +7,8 @@
     <ImageView
         android:id="@+id/ivAvatar"
         android:contentDescription="@string/avatar_description"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"
         android:layout_marginRight="@dimen/avatar_margin_right"
@@ -17,6 +19,8 @@
 
     <TextView
         android:id="@+id/tvUserScreenName"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_blue_dark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ivAvatar"
@@ -27,6 +31,9 @@
         android:id="@+id/tvTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
@@ -35,8 +42,19 @@
         android:id="@+id/tvText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/tvUserScreenName"
         android:layout_alignLeft="@+id/tvUserScreenName"
         android:layout_alignStart="@+id/tvUserScreenName" />
+
+    <View
+        android:layout_marginTop="@dimen/separator_vertical_margin"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/separator_height"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/tvText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
 
 </RelativeLayout>

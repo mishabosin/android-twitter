@@ -19,6 +19,8 @@
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:textColor="@android:color/white"
         android:text="Tweet"
         android:layout_gravity="right"
         android:layout_below="@+id/etTweetText"
