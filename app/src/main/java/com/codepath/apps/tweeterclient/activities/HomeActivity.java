@@ -60,8 +60,7 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
 
     @Override
     public void onFinishNewDialog(String inputText) {
-        //TODO: tweet this
-        Toast.makeText(HomeActivity.this, "Tweet this: " + inputText, Toast.LENGTH_LONG).show();
+        postTweet(inputText);
     }
 
     private void initAdapter() {
@@ -100,6 +99,11 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
         adapter.notifyItemRangeInserted(curSize, tweets.size() - 1);
     }
 
+    private void addPostedTweet(Tweet newTweet) {
+        tweets.add(0, newTweet);
+        adapter.notifyDataSetChanged();
+    }
+
     private void fetchHomeTimeline(final int page) {
         TwitterClient client = RestApplication.getRestClient();
         client.getHomeTimeline(page, new JsonHttpResponseHandler() {
@@ -121,6 +125,32 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
 
             private void handleError(int statusCode) {
                 String msg = "Failed to get Twitter feed: " + String.valueOf(statusCode);
+                Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void postTweet(String tweetText) {
+        TwitterClient client = RestApplication.getRestClient();
+        client.postTweet(tweetText, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                Tweet tweet = new Tweet(json);
+                addPostedTweet(tweet);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                handleError(statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                handleError(statusCode);
+            }
+
+            private void handleError(int statusCode) {
+                String msg = "Failed to tweet: " + String.valueOf(statusCode);
                 Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_LONG).show();
             }
         });
