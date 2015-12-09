@@ -18,9 +18,10 @@ Submitted by: **Misha Bosin**
     * [x] User can then enter a new tweet and post this to twitter
     * [x] User is taken back to home timeline with new tweet visible in timeline
 
-### Bonus 
+### Bonus
+ 
 * [x] Compose activity is replaced with a modal overlay
-
+* [x] User can refresh tweets timeline by pulling down to refresh (i.e pull-to-refresh)
 
 ## Video Walkthrough 
 

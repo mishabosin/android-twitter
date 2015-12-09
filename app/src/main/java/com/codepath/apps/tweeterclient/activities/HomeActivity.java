@@ -3,6 +3,7 @@ package com.codepath.apps.tweeterclient.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +29,8 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity implements NewTweetDialogListener {
 
     private List<Tweet> tweets;
-    TweetFeedAdapter adapter;
+    private TweetFeedAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
         initActionButton();
         initAdapter();
         initRecyclerView();
+        initSwipeContainer();
 
         fetchHomeTimeline();
     }
@@ -86,13 +89,14 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
     }
 
     private void updateTweets(ArrayList<Tweet> newTweets, int page) {
-        if (page == 0) {
+        if (page == 1) {
             tweets.clear();
         }
         tweets.addAll(newTweets);
 
-        if (page == 0) {
+        if (page == 1) {
             adapter.notifyDataSetChanged();
+            swipeContainer.setRefreshing(false);
             return;
         }
         int curSize = adapter.getItemCount();
@@ -102,6 +106,23 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
     private void addPostedTweet(Tweet newTweet) {
         tweets.add(0, newTweet);
         adapter.notifyDataSetChanged();
+    }
+
+    private void initSwipeContainer() {
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchHomeTimeline();
+            }
+        });
+        // Progress animation colors. The first color is also used in the
+        // refresh icon that shows up when the user makes the initial gesture
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     private void fetchHomeTimeline(final int page) {
@@ -126,6 +147,7 @@ public class HomeActivity extends AppCompatActivity implements NewTweetDialogLis
             private void handleError(int statusCode) {
                 String msg = "Failed to get Twitter feed: " + String.valueOf(statusCode);
                 Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_LONG).show();
+                swipeContainer.setRefreshing(false);
             }
         });
     }

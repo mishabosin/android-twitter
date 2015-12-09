@@ -4,10 +4,18 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.tweeterclient.activities.HomeActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTweets"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTweets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -15,8 +23,8 @@
         android:layout_gravity="bottom|end"
         android:src="@android:drawable/ic_input_add"
         android:backgroundTint="@android:color/holo_blue_dark"
-        android:layout_alignBottom="@+id/rvTweets"
-        android:layout_alignRight="@+id/rvTweets"
-        android:layout_alignEnd="@+id/rvTweets" />
+        android:layout_alignBottom="@+id/swipeContainer"
+        android:layout_alignRight="@+id/swipeContainer"
+        android:layout_alignEnd="@+id/swipeContainer" />
 
 </RelativeLayout>
