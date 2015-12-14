@@ -4,27 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.apps.tweeterclient.activities.HomeActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvTweets"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.codepath.apps.tweeterclient.fragments.MentionsTimelineFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:src="@android:drawable/ic_input_add"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:layout_alignBottom="@+id/swipeContainer"
-        android:layout_alignRight="@+id/swipeContainer"
-        android:layout_alignEnd="@+id/swipeContainer" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
