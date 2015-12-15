@@ -19,8 +19,17 @@ public class TwitterUser extends Model {
     private String twitterId;
     @Column(name = "screen_name")
     private String screenName;
+    @Column(name = "name")
+    private String name;
     @Column(name = "profile_image_url")
     private String profileImageUrl;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "followers_count")
+    private int followersCount;
+    @Column(name = "following")
+    private int following;
+
 
     public TwitterUser() {
         super();
@@ -36,7 +45,11 @@ public class TwitterUser extends Model {
         try {
             this.twitterId = object.getString("id_str");
             this.screenName = object.getString("screen_name");
+            this.name = object.getString("name");
             this.profileImageUrl = object.getString("profile_image_url");
+            this.description = object.getString("description");
+            this.followersCount = object.getInt("followers_count");
+            this.following = object.getInt("following");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -51,8 +64,24 @@ public class TwitterUser extends Model {
         return screenName;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public String getProfileImageUrl() {
         return profileImageUrl;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFollowing() {
+        return following;
     }
 
     // Finders
