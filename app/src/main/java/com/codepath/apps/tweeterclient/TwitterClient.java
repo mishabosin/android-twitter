@@ -76,8 +76,13 @@ public class TwitterClient extends OAuthBaseClient {
 		getPageableTimeline(apiUrl, page, handler);
 	}
 
+	/**
+	 * Docs: https://dev.twitter.com/rest/reference/get/account/verify_credentials
+	 * URL: https://api.twitter.com/1.1/account/verify_credentials.json
+	 * @param handler - handle the async response
+	 */
 	public void getUserInfo(JsonHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("account/verify_credentials.json");
-		getClient().post(apiUrl, null, handler);
+		getClient().get(apiUrl, handler);
 	}
 }
