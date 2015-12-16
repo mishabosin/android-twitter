@@ -31,7 +31,6 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:text="Misha Bosin"
             android:textStyle="bold"
             android:textColor="@android:color/holo_blue_dark"
             android:layout_width="wrap_content"
@@ -43,7 +42,6 @@
 
         <TextView
             android:id="@+id/tvTagline"
-            android:text="Description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -65,13 +63,11 @@
 
         <TextView
             android:id="@+id/tvFollowers"
-            android:text="5 Followers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tvFollowing"
-            android:text="5 Following"
             android:layout_marginLeft="@dimen/follower_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

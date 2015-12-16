@@ -1,5 +1,7 @@
 package com.codepath.apps.tweeterclient.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.tweeterclient.R;
+import com.codepath.apps.tweeterclient.activities.ProfileActivity;
 import com.codepath.apps.tweeterclient.models.Tweet;
 import com.codepath.apps.tweeterclient.models.TwitterUser;
+import com.codepath.apps.tweeterclient.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,6 +39,20 @@ public class TweetFeedAdapter extends
             tvUserScreenName = (TextView) itemView.findViewById(R.id.tvUserScreenName);
             tvTimestamp = (TextView) itemView.findViewById(R.id.tvTimestamp);
             tvText = (TextView) itemView.findViewById(R.id.tvText);
+            initClickListener();
+        }
+
+        void initClickListener() {
+            ivAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String screenName = v.getTag().toString();
+                    Context context = itemView.getContext();
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra(Constants.SCREEN_NAME, screenName);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -56,6 +74,7 @@ public class TweetFeedAdapter extends
         holder.tvTimestamp.setText(tweet.getRelativeCreatedAt());
 
         renderAvatar(holder, user.getProfileImageUrl());
+        holder.ivAvatar.setTag(user.getScreenName());
     }
 
     @Override

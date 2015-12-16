@@ -19,6 +19,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -29,9 +31,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        initUserData();
-
         String screenName = getIntent().getStringExtra(Constants.SCREEN_NAME);
+        initUserData(screenName);
+
         if (savedInstanceState == null) {
             UserTimelineFragment fragment = UserTimelineFragment.newInstance(screenName);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -53,18 +55,26 @@ public class ProfileActivity extends AppCompatActivity {
         Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
     }
 
-    void initUserData() {
+    void initUserData(String screenName) {
         TwitterClient client = RestApplication.getRestClient();
-        client.getUserInfo(new JsonHttpResponseHandler() {
+        client.getUserInfo(screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
                 user = new TwitterUser(json);
-                populateUserHeader(user);
+                renderUserData(user);
+            }
 
-                ActionBar actionBar = getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setTitle("@" + user.getScreenName());
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
+                if (json.length() > 0) {
+                    try {
+                        user = new TwitterUser(json.getJSONObject(0));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
                 }
+                renderUserData(user);
             }
 
             @Override
@@ -82,6 +92,15 @@ public class ProfileActivity extends AppCompatActivity {
                         String.valueOf(statusCode) + " " +
                         errorMessage;
                 Toast.makeText(ProfileActivity.this, msg, Toast.LENGTH_LONG).show();
+            }
+
+            private void renderUserData(TwitterUser user) {
+                populateUserHeader(user);
+
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setTitle("@" + user.getScreenName());
+                }
             }
         });
     }

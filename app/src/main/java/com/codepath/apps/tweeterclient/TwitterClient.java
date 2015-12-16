@@ -73,7 +73,7 @@ public class TwitterClient extends OAuthBaseClient {
 		RequestParams params = getPageParams(page);
 		params.put("screen_name", screenName);
 		String apiUrl = getApiUrl("statuses/user_timeline.json");
-		getPageableTimeline(apiUrl, page, handler);
+		getClient().get(apiUrl, params, handler);
 	}
 
 	/**
@@ -81,8 +81,16 @@ public class TwitterClient extends OAuthBaseClient {
 	 * URL: https://api.twitter.com/1.1/account/verify_credentials.json
 	 * @param handler - handle the async response
 	 */
-	public void getUserInfo(JsonHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("account/verify_credentials.json");
-		getClient().get(apiUrl, handler);
+	public void getUserInfo(String screenName, JsonHttpResponseHandler handler) {
+		if (screenName == null) {
+			String apiUrl = getApiUrl("account/verify_credentials.json");
+			getClient().get(apiUrl, handler);
+			return;
+		}
+
+		String apiUrl = getApiUrl("users/lookup.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenName);
+		getClient().get(apiUrl, params, handler);
 	}
 }

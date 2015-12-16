@@ -24,15 +24,15 @@ Submitted by: **Misha Bosin**
 * [x] User can navigate to view their own profile
     * [x] User can see picture, tagline, # of followers, # of following, and tweets on their profile.
 * [ ] User can click on the profile image in any tweet to see another user's profile.
-    * [ ] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
-    * [ ] Profile view should include that user's timeline
+    * [x] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+    * [x] Profile view should include that user's timeline
 * [x] User can infinitely paginate any of these timelines (home, mentions, user) by scrolling to the bottom
 
 ### Advanced
 
 * [x] User can refresh tweets timeline by pulling down to refresh (i.e pull-to-refresh)
 * [x] Advanced: User can open the twitter app offline and see last loaded tweets
-    - Tweets are persisted into sqlite and can be displayed from the local DB
+    * [x] Tweets are persisted into sqlite and can be displayed from the local DB
 
 ### Bonus
  
