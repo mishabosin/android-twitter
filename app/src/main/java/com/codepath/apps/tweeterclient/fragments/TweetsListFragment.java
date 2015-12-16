@@ -101,7 +101,7 @@ public abstract class TweetsListFragment extends Fragment implements NewTweetDia
         rvComments.addOnScrollListener(new RecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                fetchTimeline(page);
+                fetchTimeline(page + FIRST_PAGE);
             }
         });
     }

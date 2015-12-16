@@ -49,7 +49,7 @@ public class TwitterUser extends Model {
             this.profileImageUrl = object.getString("profile_image_url");
             this.description = object.getString("description");
             this.followersCount = object.getInt("followers_count");
-            this.following = object.getInt("following");
+            this.following = object.getInt("friends_count");
         } catch (JSONException e) {
             e.printStackTrace();
         }
